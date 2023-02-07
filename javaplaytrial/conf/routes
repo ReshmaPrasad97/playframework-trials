@@ -11,6 +11,10 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 # Employee API
 #POST /addEmployee                    controllers.EmployeeController.addEmployee(request : Request)
-GET /getEmployeebyId/:id            controllers.EmployeeController.getEmployeebyId(id: Integer)
-GET /getEmployee                 controllers.EmployeeController.getEmployee()
-POST /addEmployee              controllers.EmployeeController.addEmployee(request : Request)
+GET /getEmployeebyId/:id              controllers.EmployeeController.getEmployeebyId(id: Integer)
+GET /getEmployee                      controllers.EmployeeController.getEmployee()
+POST /addEmployee                     controllers.EmployeeController.addEmployee(request : Request)
+PUT /updateEmployee                   controllers.EmployeeController.updateEmployee(request : Request)
+DELETE /deleteEmployee/:id             controllers.EmployeeController.deleteEmployee(id: Integer)
+
+

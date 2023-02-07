@@ -13,4 +13,4 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 #POST /addEmployee                    controllers.EmployeeController.addEmployee(request : Request)
 GET /getEmployeebyId/:id            controllers.EmployeeController.getEmployeebyId(id: Integer)
 GET /getEmployee                 controllers.EmployeeController.getEmployee()
-#POST /addEmployee              controllers.EmployeeController.addEmployee()
+POST /addEmployee              controllers.EmployeeController.addEmployee(request : Request)

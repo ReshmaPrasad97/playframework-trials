@@ -17,11 +17,15 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.With;
+import play.twirl.api.Content;
 import store.EmployeeStore;
 
 import javax.inject.Inject;
+import java.net.http.HttpResponse;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import static org.elasticsearch.rest.RestRequest.request;
 
@@ -88,8 +92,34 @@ public class EmployeeController extends Controller {
 
         return ok(result);
     }
+    public Result addEmployee(Http.Request request) throws SQLException {
+        Connection connection= db.getConnection();;
+        JsonNode json = request.body().asJson();
+        int id = Integer.parseInt(json.get("id").asText());
+        String empName = json.get("empName").asText();
+        String gender = json.get("gender").asText();
+        int phoneNumber = Integer.parseInt(json.get("phoneNumber").asText());
+        String address =json.get("address").asText();
+        String emailId =json.get("emailId").asText();
 
-//    public Result addEmployee(Http.Request employee){
+
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into employee (id,empName,gender,phoneNumber,address,emailId) values(?,?,?,?,?,?)");
+        preparedStatement.setInt(1,id);
+        preparedStatement.setString(2, empName);
+        preparedStatement.setString(3, gender);
+        preparedStatement.setInt(4,phoneNumber);
+        preparedStatement.setString(5,address);
+        preparedStatement.setString(6, emailId);
+        preparedStatement.executeUpdate();
+
+        return ok("Data inserted successfully");
+    }
+
+
+
+
+
+//    public Result addEmployee(Http.Request employee) throws SQLException {
 //        Form<Employee> employeeForm = formFactory.form(Employee.class).bindFromRequest(employee);
 //        return ok(employeeStore.addEmployee(employeeForm.get()).toString());
 //    }
@@ -127,36 +157,18 @@ public class EmployeeController extends Controller {
 //    }
 
 
-//    public Result addEmployee() throws SQLException {
+//
+
+//    public Result addEmployee(String jsonData) throws SQLException {
 //        Connection connection = db.getConnection();
-//        String query = "Insert into employee (id,emp_name,gender,phone_number,address,email_id) values (?,?,?,?,?,?)";
-//        PreparedStatement ps= connection.prepareStatement(query);
-//        JsonNode jsonNode = request().body().asJson();
-//        int id = jsonNode.get("id").asInt();
-//        String emp_name = jsonNode.get("emp_name").asText();
-//        String gender = jsonNode.get("gender").asText();
-//        int phone_number = jsonNode.get("phone_number").asInt();
-//        String address = jsonNode.get("address").asText();
-//        String email_id = jsonNode.get("email_id").asText();
-//
-//
-//
-//
-//        ps.setInt(1,id);
-//        ps.setString(2,emp_name);
-//        ps.setString(3,gender);
-//        ps.setInt(4,phone_number);
-//        ps.setString(5,address);
-//        ps.setString(6,email_id);
-////        int rowsAffected = ps.executeUpdate();
-////        System.out.println(rowsAffected + " rows affected");
-//
-//    int result = ps.executeUpdate();
-//
-//        return ok("added succesfully");
+//        PreparedStatement statement1 = connection.prepareStatement("insert into employee_details (id,empName,gender,phoneNumber,address,emailId) values(?,?,?,?,?,?)");
+//        statement1.setString(1,jsonData);
+//        statement1.executeUpdate();
+//        return ok(jsonData);
 //    }
-//
-//
+
+  
+
 
 }
 
